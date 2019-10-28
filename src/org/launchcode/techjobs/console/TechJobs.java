@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -26,7 +27,10 @@ public class TechJobs {
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
 
-        System.out.println("Welcome to LaunchCode's TechJobs App!");
+
+//        }
+
+//        System.out.println("Welcome to LaunchCode's TechJobs App!");
 
         // Allow the user to search until they manually quit
         while (true) {
@@ -39,7 +43,7 @@ public class TechJobs {
 
                 if (columnChoice.equals("all")) {
                     printJobs(JobData.findAll());
-                } else {
+                } else { // four more choices
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
@@ -59,15 +63,27 @@ public class TechJobs {
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
+                searchTerm = searchTerm.toLowerCase();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
         }
     }
+
+//    public static String callThatStringFunction(HashMap<String, String> columnChoices, HashMap<String, String> actionChoices){
+//
+//
+//        String userStringRequest;
+//        System.out.println("What'chya lookin' for?");
+//        userStringRequest = in.nextLine();
+//
+//        System.out.println(JobData.findByValue(columnChoices, actionChoices,userStringRequest));
+//
+//    }
 
     // ﻿Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
@@ -111,6 +127,21 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() > 0) {
+            for (HashMap<String, String> row : someJobs) {
+                System.out.println("\n******");
+                for (Map.Entry<String, String> entry : row.entrySet()) {
+                    System.out.println(entry.getKey() + ":" + entry.getValue());
+                }
+                System.out.println("******");
+            }
+        }
+        else {
+            System.out.println("Sorry, that doesn't exist!  Try again another day.");
+        }
+
+
+//        System.out.print();
+////        System.out.println("printJobs is not implemented yet");
     }
 }
